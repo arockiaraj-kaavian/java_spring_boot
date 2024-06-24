@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.crud.Users;
+import com.example.crud.Employees;
 import com.example.crud.repository.UserRepository;
 
 @Service
@@ -15,21 +15,21 @@ public class Customservice {
     @Autowired
     private UserRepository repository;
 
-    public boolean saveUser(Users data) {
+    public boolean saveUser(Employees data) {
         repository.save(data);
         return true;
     }
-    public boolean updateUser(Users data){
+    public boolean updateUser(Employees data){
         repository.save(data);
         return true;
     }
-    public Users getUser(String id) {
+    public Employees getUser(Integer id) {
         return repository.findById(id).orElse(null);
     }
-    public List<Users> getAllUsers(){
+    public List<Employees> getAllUsers(){
         return repository.findAll();
     }
-    public boolean deleteUser(String id) {
+    public boolean deleteUser(Integer id) {
         repository.deleteById(id);
         return true;
     }

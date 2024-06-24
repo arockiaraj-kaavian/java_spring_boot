@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.example.crud.Users;
+import com.example.crud.Employees;
 
-public interface UserRepository extends MongoRepository<Users, String> {
-    List<Users> findByid(String id);
+public interface UserRepository extends MongoRepository<Employees, Integer> {
+     List<Employees> findByid(Integer id);
 }

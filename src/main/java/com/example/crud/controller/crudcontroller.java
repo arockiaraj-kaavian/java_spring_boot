@@ -8,28 +8,36 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.crud.Users;
+import com.example.crud.Employees;
 import com.example.crud.services.Customservice;
 import com.example.crud.services.Filereader;
 
 @RestController
 @RequestMapping("/api")
 public class crudcontroller {
-
+    
     @Autowired
     Customservice customservice;
 
      @Autowired
-    Filereader filereader;
+    
+     Filereader filereader;
+    @GetMapping("/getData")
+    public List<Employees> getAllUsers(){
+        System.out.println("Welcome to all to in java Spring");
 
+
+         return customservice.getAllUsers();
+
+    }
 
     @GetMapping("/gsondata")
     public String jsonArray(){
@@ -49,16 +57,8 @@ public class crudcontroller {
         }
     }
 
-    @GetMapping("/getData")
-    public List<Users> getAllUsers(){
-        System.out.println("Welcome to all to in java Spring");
-
-
-         return customservice.getAllUsers();
-
-    }
     @PostMapping("/addData")
-    public String saveUser(@RequestBody Users data){
+    public String saveUser(@RequestBody Employees data){
         System.out.println(data);
         boolean created = customservice.saveUser(data);
 
@@ -70,7 +70,8 @@ public class crudcontroller {
         }
     }
     @PutMapping("/editData")
-    public String updateUser(@RequestBody Users data){
+    public String updateUser(@RequestBody Employees data){
+        System.out.println(data);
         boolean updated = customservice.updateUser(data);
         if(updated) {
             return "user updated successfully";
@@ -81,9 +82,8 @@ public class crudcontroller {
     }
 
     @DeleteMapping("/deleteData")
-    public String deleteUser(@RequestBody Users id){
-        System.out.println(id);
-        boolean deleted = customservice.deleteUser(null);
+    public String deleteUser(@RequestParam("id") Integer id){
+        boolean deleted = customservice.deleteUser(id);
         if(deleted){
             return "user deleted successfully";
         }else{
