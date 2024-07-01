@@ -2,8 +2,10 @@ package com.example.crud.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.crud.Employees;
+import com.example.crud.model.DatabaseSequence;
+import com.example.crud.model.Employees;
 import com.example.crud.services.Customservice;
 import com.example.crud.services.Filereader;
+import com.example.crud.services.NextSequenceService;
 
 @RestController
 @RequestMapping("/api")
@@ -28,8 +32,12 @@ public class crudcontroller {
     Customservice customservice;
 
      @Autowired
+    Filereader filereader;
+
     
-     Filereader filereader;
+
+    
+
     @GetMapping("/getData")
     public List<Employees> getAllUsers(){
         System.out.println("Welcome to all to in java Spring");
@@ -57,9 +65,12 @@ public class crudcontroller {
         }
     }
 
+    
     @PostMapping("/addData")
     public String saveUser(@RequestBody Employees data){
+
         System.out.println(data);
+        
         boolean created = customservice.saveUser(data);
 
         if(created) {
